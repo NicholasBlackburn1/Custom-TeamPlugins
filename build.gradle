@@ -1,6 +1,7 @@
 plugins {
    id 'java'
-   id 'kr.entree.spigradle' version '1.2.4'
+   id "ru.endlesscode.bukkitgradle" version "0.8.2"
+
 }
 
 group 'space.nicholasblackburn'
@@ -8,42 +9,47 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-repositories {
-   mavenCentral()
-   protocolLib()
-   jitpack() // For vault
-}
 
+// Project information
+group "space.nicholasblackburn.main"
+description "A plugin for teams on hackercraft"
+version "0.1"
+
+// Let's add needed API to project
 dependencies {
-   compileOnly paper('1.12.2') // Or spigot()
-   compileOnly protocolLib()
-   compileOnly vault()
-   testImplementation 'junit:junit:4.12'
+    compileOnly bukkit() 
+    compileOnly spigot()
+
+    // see section 'Dependencies' for more info
 }
 
-spigot {
-   authors = ['Nicholas Blackburn']
-   depends = ['ProtocolLib']
-   apiVersion = '1.12'
-   load = STARTUP
-   commands {
-       give {
-           aliases = ['']
-           description = 'Give command.'
-           permission = 'test.foo'
-           permissionMessage = 'You do not have permission!'
-           usage = '/<command> [test|stop]'
-       }
-   }
-   permissions {
-       'test.foo' {
-           description = 'Allows foo command'
-           defaults = 'true'
-       }
-       'test.*' {
-           description = 'Wildcard permission'
-           defaults = 'op'
-           children = ['test.foo': true]
-       }
-   }
+bukkit {
+    // Version of API (if you will not set this property, will be used latest available)
+    version = "1.12.2"
+ 
+    // Attributes for plugin.yml
+    meta {
+        name = "Teams CatServer"
+        description = "My amazing plugin, that doing nothing"
+        main = "space.nicholasblckburn.teams"
+        version = "1.0"
+        url = "http://www.hackercraft.network" // Attribute website
+        authors = ["nicholas Blackburn", "Ethan Wagners"]
+    }
+        run {
+        // Core type. It can be 'spigot' or 'paper'
+        core = "spigot"
+        // Accept EULA
+        eula = true
+        // Set online-mode flag
+        onlineMode = false
+        // Debug mode (listen 5005 port, if you use running from IDEA this option will be ignored)
+        debug = true
+        // Set server encoding (flag -Dfile.encoding)
+        encoding = "UTF-8"
+        // JVM arguments
+        javaArgs = "-Xmx1G"
+        // Bukkit arguments
+        bukkitArgs = ""
+    }
 }
