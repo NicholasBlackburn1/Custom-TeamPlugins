@@ -1,0 +1,49 @@
+plugins {
+   id 'java'
+   id 'kr.entree.spigradle' version '1.2.4'
+}
+
+group 'space.nicholasblackburn'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+   mavenCentral()
+   protocolLib()
+   jitpack() // For vault
+}
+
+dependencies {
+   compileOnly paper('1.12.2') // Or spigot()
+   compileOnly protocolLib()
+   compileOnly vault()
+   testImplementation 'junit:junit:4.12'
+}
+
+spigot {
+   authors = ['Nicholas Blackburn']
+   depends = ['ProtocolLib']
+   apiVersion = '1.12'
+   load = STARTUP
+   commands {
+       give {
+           aliases = ['']
+           description = 'Give command.'
+           permission = 'test.foo'
+           permissionMessage = 'You do not have permission!'
+           usage = '/<command> [test|stop]'
+       }
+   }
+   permissions {
+       'test.foo' {
+           description = 'Allows foo command'
+           defaults = 'true'
+       }
+       'test.*' {
+           description = 'Wildcard permission'
+           defaults = 'op'
+           children = ['test.foo': true]
+       }
+   }
+}
